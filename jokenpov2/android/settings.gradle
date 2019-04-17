@@ -1,0 +1,3 @@
+rootProject.name = 'jokenpov2'
+
+include ':app'
