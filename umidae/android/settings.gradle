@@ -1,0 +1,3 @@
+rootProject.name = 'umidae'
+
+include ':app'
