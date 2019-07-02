@@ -33,11 +33,15 @@ export default class Login extends Component {
     })
   }
 
+  navigate() {
+    this.props.navigation.navigate('Enigmas');
+  }
+
   onPress() {
 
     const dados = {
-      login: this.state.login,
-      senha: this.state.senha,
+      email: this.state.login,
+      password: this.state.senha,
     };
 
     this.setState({ loading : true });
@@ -46,22 +50,19 @@ export default class Login extends Component {
 
       axios({ 
           method: 'post', 
-          url: 'http://www.gileduardo.com.br/react/api_charadas/rest.php/auth',
+          url: 'http://jonatassn.servegame.com/api/samm/user/auth',
           data: dados,
           headers:{
             "Content-Type": "application/json" 
           }, 
         }).then(response => {
 
-          if(response.data.id < 0) {
-            alert(response.data.nome)  
-            this.setState({
-              login : "",
-              senha : "",
-            })  
+          if(response.data.msg == true) {
+            //alert(response.data.msg)
+            this.navigate();  
           }
           else {
-            alert('[OK] Autenticação efetuada com sucesso!')   
+            alert(response.data.msg)   
           }
           
           this.setState({ loading : false });
@@ -93,7 +94,7 @@ export default class Login extends Component {
             style={ styles.input }
             placeholder = 'usuario'
             value = { this.state.login }
-            maxLength={15} 
+            maxLength={100} 
             onChangeText = { (value) => this.onChange('login', value) }
           />
           <TextInput
@@ -114,19 +115,23 @@ export default class Login extends Component {
         </View>
     )
   }
-
+  
   render() {
     return (
       <View style={styles.container}>
         <ImageBackground 
           source={ require('../img/sysnigma_ico.png') } 
           style={{width: '100%', height: '100%'}}>
+
             <Text style={[styles.text, {fontSize: 36}]}>Sysnigmas </Text>
             <Text style={[styles.text, {fontSize: 24}]}>Mobile </Text>
+            
             <View style={styles.footer}>
               { this.renderLoad() }
             </View>
+
         </ImageBackground>
+        
       </View>
     );
   }

@@ -1,4 +1,7 @@
-/*
+
+// adb kill-server
+// adb start-server
+
 import React, {Component} from 'react';
 import {
   StyleSheet, 
@@ -9,67 +12,69 @@ import {
   Button,
   ActivityIndicator } from 'react-native';
 
-import axios from 'axios';
 
-export default class Menu extends Component {
+
+class Enigmas extends Component {
 
   constructor(props) {
     super(props);
-  
     this.state = {
-      loading : false,
-      charadas : [],
-    };
-  }
+    	codigo: 0,
+    	loading: false,
+    	dados_api: 0,
+    	error: false
 
-  onPressChar() {
-
-    /*this.setState({ loading : true });
-
-    setTimeout(() => {    
-      axios.get('http://www.gileduardo.com.br/react/api_charadas/rest.php/charadas')
-        .then(response => {
-            this.setState({ 
-              charadas : response.data,
-              loading : false
-            });
-
-            alert('OK')
-
-        }).catch(error => {
-            this.setState({
-                loading : false,
-            });
-            alert('ERROR')
-        });
-    }, 1000);*/
-  }
-
-  renderLoad() {
-
-    if(this.state.loading) {
-      return (
-        <View style={ {flex: 1, justifyContent: 'center', paddingBottom: 10} }>
-          <ActivityIndicator 
-            size = "large" 
-            color="#AA0000"
-          />
-        </View>
-      )
     }
+  
+  }
 
-    return (
-        <View> </View>
-    )
+  onChange(key, value) {
+  	this.setState({
+  		[key]: value,
+  	});
+  }
+
+  onPress() {
+
+    const url = "http://jonatassn.servegame.com/api/sysnigmas/enigma/" + this.state.codigo;
+
+    this.setState({ loading : true });
+
+    setTimeout(() => {
+
+      axios.get(url)
+      	.then( response => {
+      		alert(response.data);
+      	}).catch(error => {
+      		this.setState({
+      			carregando: false,
+      			error : true
+      		});
+      	});
+   
+  	}
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <ImageBackground 
-          source={ require('../img/sysnigma_ico.png') } 
-          style={{width: '100%', height: '100%'}}>
-        </ImageBackground>
+      	<Text>Insira o Código do Enigma</Text>
+
+        <TextInput 
+        	style={styles.input}
+        	placeholder="Código"
+        	value={this.state.codigo}
+        	maxLength={8}
+        	onChangeText={ (value) => this.onChange('codigo', value)}
+        />
+        <View style={{ margin: 2 }}>
+	        <Button 
+	          title="Buscar"
+	          onPress={ () => { this.onPress() } }
+	          color="#4A6C41"
+	        />
+	    </View>
+
       </View>
     );
   }
@@ -121,3 +126,5 @@ const styles = StyleSheet.create({
     color: '#4A6C41'
   },
 });
+
+export default Enigmas;
