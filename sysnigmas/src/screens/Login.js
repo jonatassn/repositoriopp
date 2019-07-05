@@ -33,8 +33,8 @@ export default class Login extends Component {
     })
   }
 
-  navigate() {
-    this.props.navigation.navigate('Enigmas');
+  navigate(id) {
+    this.props.navigation.navigate('Enigmas', {id});
   }
 
   onPress() {
@@ -59,7 +59,7 @@ export default class Login extends Component {
 
           if(response.data.msg == true) {
             //alert(response.data.msg)
-            this.navigate();  
+            this.navigate(response.data.id);
           }
           else {
             alert(response.data.msg)   

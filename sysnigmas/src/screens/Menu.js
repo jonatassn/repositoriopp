@@ -42,7 +42,7 @@ export default class Menu extends Component {
             });
             alert('ERROR')
         });
-    }, 1000);*/
+    }, 1000);
   }
 
   renderLoad() {
@@ -121,3 +121,4 @@ const styles = StyleSheet.create({
     color: '#4A6C41'
   },
 });
+*/

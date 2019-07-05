@@ -9,6 +9,7 @@ import {View, Text} from 'react-native';
 
 import Login from './src/screens/Login';
 import Enigmas from './src/screens/Enigmas';
+import Enigma from './src/screens/Enigma';
 
 export default createStackNavigator(
   {
@@ -21,14 +22,23 @@ export default createStackNavigator(
         const nome = 'ENIGMAS';
 
         return ({ 
-          title : nome 
+          title : nome
         });
       }
-    } 
+    },
+    'Enigma' : {
+        screen : Enigma,
+        navigationOptions : ( {navigation} ) => {
+            const nome = 'RESPOSTAS';
+
+            return ({
+                title : nome
+            });
+        }
+    }
   },
   {
     navigationOptions : {
-      title : 'Tela de Loginho',
       headerTintColor : 'black',
       headerStyle : {
         backgroundColor : '#E8E8E7',
